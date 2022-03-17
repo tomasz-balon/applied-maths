@@ -67,6 +67,23 @@ distribution = np.linspace(new_measurements_mean-new_measurements_sigma_3,
                            new_measurements_mean+new_measurements_sigma_3, 10000)
 plt.plot(distribution, stats.norm.pdf(distribution, new_measurements_mean, new_measurements_sigma))
 
-plt.show()
+# plt.show()
 
+confidence_level = 0.98
+confidence_interval = stats.norm.interval(confidence_level, loc=mean_xi, scale=sigma_xi)
+dataset_median = np.median(xi)
 
+first_quantile_percentage = 0.25
+third_quantile_percentage = 0.75
+
+first_quantile = np.quantile(xi, first_quantile_percentage)
+third_quantile = np.quantile(xi, third_quantile_percentage)
+
+print(f'Confidence interval: {confidence_interval}, median: {dataset_median}')
+print(f'First quantile: {first_quantile}, third quantile: {third_quantile}')
+
+confidence_interval_median_lower_bound = xi[8]
+confidence_interval_median_higher_bound = xi[15]
+
+print(f'Confidence interval based on median and quantiles: ({confidence_interval_median_lower_bound}, '
+      f'{confidence_interval_median_higher_bound})')
