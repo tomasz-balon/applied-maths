@@ -46,24 +46,31 @@ def bifurcation():
 
 if __name__ == '__main__':
     t = np.linspace(0, 100, 10000)
-    # x0 = 100
     x0 = 0.001
-    # r_arr = [0.2, 0.8, 2.2, 3.0, 3.4, 3.8, 4.0]
-    r_arr = [0.2, 0.8, 2.2, 3.0]
+    r_arr = [0.1, 0.2, 0.4, 1.4, 2.2, 2.9]
     K = 1000
 
-    # for r in r_arr:
-    #     gamma = (1 + r) / K
-    #     # gamma = r / K
-    #     solution = odeint(numerical, x0, t, args=(r, gamma))
-    #
-    #     lambda_param = 1 + r
-    #     discrete(x0, r, K, lambda_param)
-    #
-    #     plt.figure()
-    #     plt.title(f'Numerical solution, r={r}')
-    #     plt.plot(t, solution[:, 0])
+    for r in r_arr:
+        gamma = 0.1
+        gamma2 = 0.4
+        gamma3 = 1.1
+        gamma4 = 1.4
 
+        solution = odeint(numerical, x0, t, args=(r, gamma))
+        solution2 = odeint(numerical, x0, t, args=(r, gamma2))
+        solution3 = odeint(numerical, x0, t, args=(r, gamma3))
+        solution4 = odeint(numerical, x0, t, args=(r, gamma4))
+        lambda_param = 1 + r
+        discrete(x0, r, K, lambda_param)
+
+        plt.figure()
+        plt.title(f'Numerical solution, r={r}')
+        plt.plot(t, solution[:, 0], label=' \u03B3 = 0.1')
+        plt.plot(t, solution2[:, 0], label=' \u03B3 = 0.4')
+        plt.plot(t, solution3[:, 0], label=' \u03B3 = 1.1')
+        plt.plot(t, solution4[:, 0], label=' \u03B3 = 1.4')
+        plt.legend(loc='best')
+        
     bifurcation()
 
     plt.show()
