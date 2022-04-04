@@ -4,7 +4,7 @@ import numpy as np
 
 
 def numerical(x, t, r, gamma):
-    dxdt = (r*x) - (gamma * (x**2))
+    dxdt = (r * x) - (gamma * (x ** 2))
     return dxdt
 
 
@@ -26,22 +26,29 @@ def discrete(x_0, r, K, lambda_param):
     plt.scatter(x, result)
 
 
-def bifurcation():
-    lambda_bifurcation = np.linspace(0.001, 4, 4000)
-    x_0 = 0.001
-    x_prev = 0.5
-    X_list = []
-    Y_list = []
+def logistic(lambda_logistic_param, x):
+    return lambda_logistic_param * x * (1 - x)
 
-    for lambda_bifurcation_param in lambda_bifurcation:
-        X_list.append(lambda_bifurcation_param)
-        x_next = lambda_bifurcation_param * x_prev * (1 - x_prev)
-        x_prev = x_next
-        Y_list.append(x_next)
+
+def bifurcation():
+    samples_size = 10000
+    lambda_bifurcation = np.linspace(0.001, 4, samples_size)
+    x = np.ones(samples_size) * 0.001
+    result_list = []
+    lambda_list = []
 
     plt.figure()
+
+    for i in range(1000):
+        x = logistic(lambda_bifurcation, x)
+
+        if i >= 900:
+            plt.plot(lambda_bifurcation, x, ',', alpha=0.25)
+
     plt.title('Bifurcation')
-    plt.scatter(X_list, Y_list)
+    plt.xlabel('λ')
+    plt.ylabel(r'$x_{k}$')
+    plt.scatter(lambda_list, result_list)
 
 
 if __name__ == '__main__':
@@ -70,7 +77,7 @@ if __name__ == '__main__':
         plt.plot(t, solution3[:, 0], label=' \u03B3 = 1.1')
         plt.plot(t, solution4[:, 0], label=' \u03B3 = 1.4')
         plt.legend(loc='best')
-        
+
     bifurcation()
 
     plt.show()
