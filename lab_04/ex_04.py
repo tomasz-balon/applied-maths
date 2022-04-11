@@ -52,9 +52,9 @@ def equation(x, t):
     return dxdt
 
 
-max_value = 200
+max_value = 250
 
-t, h = np.linspace(0, 10, max_value, retstep=True)
+t, h = np.linspace(0, 13, max_value, retstep=True)
 
 solution = odeint(equation, 2, t)
 
